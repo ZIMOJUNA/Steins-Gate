@@ -2,11 +2,20 @@ package main
 
 import (
 	"log"
+	"server/config"
+	"server/redis"
 
 	"github.com/gofiber/fiber/v3"
 )
 
+func InitSystem() {
+	config.LoadConfig("config/config.yaml")
+	redis.InitRedis()
+}
+
 func main() {
+	InitSystem()
+
 	// Initialize a new Fiber app
 	app := fiber.New()
 
@@ -18,4 +27,5 @@ func main() {
 
 	// Start the server on port 3000
 	log.Fatal(app.Listen(":3000"))
+
 }

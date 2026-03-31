@@ -1,0 +1,15 @@
+# 服务器配置
+server:
+  port: 8080
+  mode: "debug"
+
+# Redis 配置
+redis:
+  host: "localhost"
+  port: 6379
+  password: ""
+  db: 0
+
+# MySQL 配置
+mysql:
+  dsn: "root:123456@tcp(127.0.0.1:3306)/test?charset=utf8mb4&parseTime=True"
