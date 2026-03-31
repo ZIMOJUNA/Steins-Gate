@@ -36,5 +36,5 @@ func debugPrint() {
 	log.Printf("服务器端口：%d", Conf.Server.Port)
 	log.Printf("运行模式：%s", Conf.Server.Mode)
 	log.Printf("Redis地址：%s:%d", Conf.Redis.Host, Conf.Redis.Port)
-	log.Printf("MySQL DSN：%s", Conf.MySQL.DSN)
+	log.Printf("MongoDB Url：%s  数据库：%s", Conf.MongoDB.Url, Conf.MongoDB.DBName)
 }

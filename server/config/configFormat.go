@@ -2,9 +2,9 @@ package config
 
 // Config 总配置结构体（对应整个yaml文件）
 type Config struct {
-	Server ServerConfig `yaml:"server"` // 映射yaml的server节点
-	Redis  RedisConfig  `yaml:"redis"`  // 映射yaml的redis节点
-	MySQL  MySQLConfig  `yaml:"mysql"`  // 映射yaml的mysql节点
+	Server  ServerConfig  `yaml:"server"`  // 映射yaml的server节点
+	Redis   RedisConfig   `yaml:"redis"`   // 映射yaml的redis节点
+	MongoDB MongoDBConfig `yaml:"mongodb"` // 映射yaml的mongodb节点
 }
 
 // ServerConfig 服务器配置
@@ -21,7 +21,8 @@ type RedisConfig struct {
 	DB       int    `yaml:"db"`
 }
 
-// MySQLConfig MySQL配置
-type MySQLConfig struct {
-	DSN string `yaml:"dsn"`
+// MongoDBConfig MongoDB配置
+type MongoDBConfig struct {
+	Url    string `yaml:"url"`
+	DBName string `yaml:"dbname"`
 }

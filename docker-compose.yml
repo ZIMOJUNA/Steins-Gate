@@ -1,0 +1,34 @@
+# 服务定义：Redis + MongoDB
+services:
+  # Redis 服务
+  redis:
+    image: redis:7-alpine  # 轻量级 Redis 7 镜像
+    container_name: redis-server
+    restart: always  # 开机自启
+    ports:
+      - "6379:6379"  # 主机端口:容器端口
+    command: redis-server --requirepass 123456  # 设置 Redis 密码
+    volumes:
+      - ./redis/data:/data  # 数据持久化（宿主机目录:容器目录）
+    networks:
+      - redis-mongo-network
+
+  # MongoDB 服务
+  mongodb:
+    image: mongo:6-jammy  # MongoDB 6 稳定版
+    container_name: mongodb-server
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin  # 管理员账号
+      MONGO_INITDB_ROOT_PASSWORD: 123456  # 管理员密码
+    volumes:
+      - ./mongodb/data:/data/db  # 数据持久化
+    networks:
+      - redis-mongo-network
+
+# 自定义网络（两个服务可以互相通信）
+networks:
+  redis-mongo-network:
+    driver: bridge
