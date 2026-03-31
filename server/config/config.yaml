@@ -12,5 +12,5 @@ redis:
 
 # MongoDB 配置
 mongodb:
-  uri: "mongodb://admin:123456@localhost:27017/"
+  url: "mongodb://admin:123456@localhost:27017/"
   dbname: "test"

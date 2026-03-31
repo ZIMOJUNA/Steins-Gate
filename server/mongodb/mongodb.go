@@ -10,11 +10,9 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-// 全局客户端（整个项目共用一个）
 var client *mongo.Client
 var db *mongo.Database
 
-// init 自动初始化
 func init() {
 
 	// 创建连接

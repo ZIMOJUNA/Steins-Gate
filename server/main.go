@@ -1,23 +1,40 @@
 package main
 
 import (
-	"log"
+	"fmt"
+	"server/mongodb"
+	"server/redis"
+	"time"
+
+	"server/config"
+	"server/handle"
 
 	"github.com/gofiber/fiber/v3"
 )
 
+func test() {
+	mongodb.GetClient()
+	redis.GenerateToken("Apple", 100*time.Second)
+	redis.GenerateToken("Applsaddsasde", 100*time.Second)
+	redis.GenerateToken("Applsaddsas32423de", 100*time.Second)
+}
+
 func main() {
 
-	// Initialize a new Fiber app
+	test()
+
+	// 创建 Fiber 应用
 	app := fiber.New()
 
-	// Define a route for the GET method on the root path '/'
-	app.Get("/", func(c fiber.Ctx) error {
-		// Send a string response to the client
-		return c.SendString("Hello, World 👋!")
-	})
+	app.Get("/", handle.HelloWorld)
+	app.Post("/user", handle.HelloWorld)
 
-	// Start the server on port 3000
-	log.Fatal(app.Listen(":3000"))
+	port := config.Conf.Server.Port
+	addr := fmt.Sprintf(":%d", port)
 
+	// 启动服务
+	err := app.Listen(addr)
+	if err != nil {
+		panic("服务启动失败：" + err.Error())
+	}
 }

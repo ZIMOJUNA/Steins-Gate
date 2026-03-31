@@ -5,6 +5,7 @@ import (
 	"crypto/rand"
 	"encoding/base64"
 	"fmt"
+	"log"
 	"server/config"
 	"time"
 
@@ -23,6 +24,26 @@ func init() {
 		Password: config.Conf.Redis.Password,
 		Database: config.Conf.Redis.DB,
 	})
+	// 连通性测试：Set + Get 验证
+	testKey := "redis_connect_test"
+	testVal := "ok"
+	err := redisStore.SetWithContext(context.Background(), testKey, []byte(testVal), 10*time.Second)
+	if err != nil {
+		log.Fatal("❌ Redis 连接失败（Set 测试）：", err)
+	}
+
+	val, err := redisStore.GetWithContext(context.Background(), testKey)
+	if err != nil {
+		log.Fatal("❌ Redis 连接失败（Get 测试）：", err)
+	}
+	if string(val) != testVal {
+		log.Fatal("❌ Redis 连接失败：数据不一致")
+	}
+
+	// 清理测试键
+	_ = redisStore.DeleteWithContext(context.Background(), testKey)
+
+	log.Println("✅ Redis 全局初始化完成！")
 }
 
 // GenerateToken 生成唯一Token并存入Redis
