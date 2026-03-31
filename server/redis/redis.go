@@ -16,7 +16,7 @@ import (
 var redisStore *redis.Storage
 
 // InitRedis 初始化Redis
-func InitRedis() {
+func init() {
 	redisStore = redis.New(redis.Config{
 		Host:     config.Conf.Redis.Host,
 		Port:     config.Conf.Redis.Port,

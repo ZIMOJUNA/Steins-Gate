@@ -9,10 +9,9 @@ import (
 
 var Conf Config
 
-// LoadConfig 加载配置文件
-func LoadConfig(path string) {
+func init() {
 	// 读取文件
-	data, err := os.ReadFile(path)
+	data, err := os.ReadFile("config/config.yaml")
 	if err != nil {
 		log.Fatalf("加载配置文件失败：%v", err)
 		return
@@ -24,7 +23,9 @@ func LoadConfig(path string) {
 		return
 	}
 
-	// debugPrint()
+	if Conf.Server.Mode == "debug" {
+		debugPrint()
+	}
 }
 
 func debugPrint() {
