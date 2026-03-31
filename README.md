@@ -1,14 +1,17 @@
-# -
-这里是《创世纪》项目组
+# 这里是《创世纪》项目组
+
+## Docker管理环境，后端使用GO+Redis+MongoDB
 
 
-MongoDB Compass（官方免费，图形界面）
+## MongoDB数据库可视化管理工具
+### MongoDB Compass
 1. 下载安装
    https://www.mongodb.com/products/compass
 2. 连接你的数据库
    填入： mongodb://admin:123456@localhost:27017/
 
 
+## Docker常用指令
 ### 后台启动（-d 表示守护进程）
 docker-compose up -d
 
