@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/Future-Game-Laboratory/Steins-Gate/config"
+	"github.com/Future-Game-Laboratory/Steins-Gate/dbschema"
 	mysqldriver "github.com/go-sql-driver/mysql"
 )
 
@@ -37,6 +38,11 @@ func Init() error {
 	if err := conn.PingContext(ctx); err != nil {
 		_ = conn.Close()
 		return fmt.Errorf("MySQL 连接失败：%w", err)
+	}
+
+	if err := dbschema.Ensure(ctx, conn); err != nil {
+		_ = conn.Close()
+		return fmt.Errorf("MySQL 表结构初始化失败：%w", err)
 	}
 
 	db = conn

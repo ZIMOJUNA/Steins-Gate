@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"strconv"
 	"time"
 
 	"github.com/Future-Game-Laboratory/Steins-Gate/config"
@@ -132,4 +133,54 @@ func DeleteToken(token string) error {
 
 	key := fmt.Sprintf("user_token:%s", token)
 	return redisStore.DeleteWithContext(context.Background(), key)
+}
+
+func Set(ctx context.Context, key string, value []byte, expire time.Duration) error {
+	if redisStore == nil {
+		return ErrNotInitialized
+	}
+	return redisStore.SetWithContext(ctx, key, value, expire)
+}
+
+func Get(ctx context.Context, key string) ([]byte, error) {
+	if redisStore == nil {
+		return nil, ErrNotInitialized
+	}
+	return redisStore.GetWithContext(ctx, key)
+}
+
+func Del(ctx context.Context, key string) error {
+	if redisStore == nil {
+		return ErrNotInitialized
+	}
+	return redisStore.DeleteWithContext(ctx, key)
+}
+
+func IncrWithExpire(ctx context.Context, key string, expire time.Duration) (int64, error) {
+	if redisStore == nil {
+		return 0, ErrNotInitialized
+	}
+
+	count, err := redisStore.Conn().Incr(ctx, key).Result()
+	if err != nil {
+		return 0, err
+	}
+	if count == 1 && expire > 0 {
+		if err := redisStore.Conn().Expire(ctx, key, expire).Err(); err != nil {
+			return 0, err
+		}
+	}
+
+	return count, nil
+}
+
+func GetInt(ctx context.Context, key string) (int64, error) {
+	data, err := Get(ctx, key)
+	if err != nil {
+		return 0, err
+	}
+	if len(data) == 0 {
+		return 0, nil
+	}
+	return strconv.ParseInt(string(data), 10, 64)
 }

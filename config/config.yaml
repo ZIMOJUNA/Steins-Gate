@@ -19,3 +19,31 @@ mysql:
   user: "game_app"
   password: "123456"
   dbname: "game_db"
+
+# 账号、验证码和登录态配置
+auth:
+  token_ttl: "24h"
+  email_code_ttl: "5m"
+  email_code_resend_interval: "60s"
+  email_code_send_limit_per_hour: 5
+  email_code_max_verify_attempts: 5
+  email_code_hash_secret: "change-me-in-production"
+  password_min_length: 8
+
+# 邮件配置
+# provider 支持：
+# - console：开发环境打印验证码到控制台
+# - smtp：通过 SMTP 发送邮件
+# - aliyun：预留，后续接阿里云邮件推送时实现同一个 Sender 接口
+mail:
+  provider: "console"
+  smtp:
+    host: "smtp.example.com"
+    port: 587
+    username: "your-smtp-user"
+    password: "your-smtp-password"
+    from: "no-reply@example.com"
+    from_name: "Steins Gate"
+    use_tls: false
+    start_tls: true
+    skip_verify: false
