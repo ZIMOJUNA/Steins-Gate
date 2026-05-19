@@ -9,7 +9,7 @@ services:
       - "6379:6379"  # 主机端口:容器端口
     command: redis-server --requirepass 123456  # 设置 Redis 密码
     volumes:
-      - ./redis/data:/data  # 数据持久化（宿主机目录:容器目录）
+      - redis-data:/data  # 使用 Docker 命名卷，避免在项目目录生成数据文件
     networks:
       - redis-mysql-network
 
@@ -26,8 +26,7 @@ services:
       MYSQL_USER: game_app             # 普通用户（可选）
       MYSQL_PASSWORD: 123456           # 普通用户密码（可选）
     volumes:
-      - ./mysql/data:/var/lib/mysql    # 数据持久化
-      - ./mysql/conf:/etc/mysql/conf.d # 配置文件挂载（可选）
+      - mysql-data:/var/lib/mysql    # 使用 Docker 命名卷，避免在项目目录生成数据文件
     networks:
       - redis-mysql-network
     command:
@@ -38,3 +37,8 @@ services:
 networks:
   redis-mysql-network:
     driver: bridge
+
+# 命名卷由 Docker 管理，不会写入当前项目目录。
+volumes:
+  redis-data:
+  mysql-data:

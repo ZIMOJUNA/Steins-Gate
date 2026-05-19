@@ -24,12 +24,6 @@ profile.cov
 go.work
 go.work.sum
 
-# Local build/cache and docker data
-.gocache/
-mysql/data/
-mysql/conf/
-redis/data/
-
 # env file
 .env
 

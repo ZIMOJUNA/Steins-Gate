@@ -4,15 +4,14 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/Future-Game-Laboratory/Steins-Gate/mailer"
-	"github.com/Future-Game-Laboratory/Steins-Gate/mysql"
-	"github.com/Future-Game-Laboratory/Steins-Gate/redis"
 	"github.com/Future-Game-Laboratory/Steins-Gate/service"
 
 	"github.com/Future-Game-Laboratory/Steins-Gate/config"
 	"github.com/Future-Game-Laboratory/Steins-Gate/handle"
-
-	"github.com/gofiber/fiber/v3"
+	"github.com/Future-Game-Laboratory/Steins-Gate/mailer"
+	"github.com/Future-Game-Laboratory/Steins-Gate/mysql"
+	"github.com/Future-Game-Laboratory/Steins-Gate/redis"
+	fiber "github.com/gofiber/fiber/v3"
 )
 
 func main() {

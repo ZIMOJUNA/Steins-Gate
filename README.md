@@ -32,6 +32,8 @@ docker-compose up -d
 - Redis：`127.0.0.1:6379`
 - Redis 密码：`123456`
 
+MySQL 和 Redis 使用 Docker 命名卷保存数据，不会再把数据文件写到项目里的 `mysql/data` 或 `redis/data`。
+
 ## 配置
 
 配置文件：`config/config.yaml`
@@ -412,4 +414,16 @@ docker-compose down
 docker-compose logs -f
 docker-compose logs redis
 docker-compose logs mysql
+```
+
+查看 Docker 命名卷：
+
+```bash
+docker volume ls
+```
+
+删除当前 compose 项目的容器和命名卷：
+
+```bash
+docker-compose down -v
 ```
